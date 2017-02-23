@@ -43,7 +43,7 @@ if (!empty($_SESSION['listaUsuarios'])) {
 		}
 		
 		if($verifica -> getExcluir_usuario()){
-			echo ' <button type="button" class="btn btn-danger btn-responsive" aria-label="Left Align">
+			echo ' <button type="button" class="btn btn-danger btn-responsive" aria-label="Left Align" onClick="deletarUsuario('.$value['codigo'].')">
 									<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir
 				</button>';
 		}else{
