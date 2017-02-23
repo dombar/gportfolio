@@ -69,7 +69,7 @@ class UsuarioDAO{
 		$query->bindValue(":email", $email);
 		$query->bindValue(":password", $password); 
 		$query->execute();
-		return $this->processResults($query);
+		return $this->processResults($query); 
 	}
 
 	public function localizarUsuarioPorCodigoOuNome($codigo, $nome){
