@@ -73,3 +73,27 @@ function direcionamentoPagina(idUsuario){
         });
 	
 }
+
+function deletarUsuario(idUsuario) {
+    if (confirm("Deseja realmente excluir esse usuário!") == true) {
+		if(idUsuario != null || idUsuario.length > 0){
+            $.ajax({
+            url: '../service/DeletaUsuario.php',
+            type: 'POST',
+            data: {
+                codigo: idUsuario,
+                dataType: 'json'
+            },
+            success: function(xhr, data) {
+				location.href = '../view/PesquisaUsuario.php';
+                return data;
+            },
+            error: function(req, err) {
+                console.log('Erro ao excluir usuario' + err)
+            }
+        });
+		}
+    } else {
+		location.href = '../view/PesquisaUsuario.php';
+    }
+}

@@ -64,7 +64,7 @@ class UsuarioDAO{
 	}
 
 	public function validaUsuario($email, $password){
-		//$password = md5($password);
+		$password = md5($password);
 		$query = Conexao::getConnMysql()->prepare('SELECT * FROM usuarios WHERE senha=(:password) AND email=(:email) LIMIT 1');
 		$query->bindValue(":email", $email);
 		$query->bindValue(":password", $password); 
@@ -136,6 +136,25 @@ class UsuarioDAO{
 		}
 	}
 
+	public function removeUsuario($idUsuario){
+		$deleteMembros = Conexao::getConnMysql()->prepare('DELETE FROM membros WHERE idUsuario = (:idUsuario)');
+		$deleteMembros->bindValue(":idUsuario", $idUsuario);
+		$deleteMembros->execute();
+
+		$deletePermissao = Conexao::getConnMysql()->prepare('DELETE FROM permissao_usuario WHERE idUsuario = (:idUsuario)');
+		$deletePermissao->bindValue(":idUsuario", $idUsuario);
+		$deletePermissao->execute();
+
+		$deleteStatus = Conexao::getConnMysql()->prepare('DELETE FROM status WHERE idUsuario = (:idUsuario)');
+		$deleteStatus->bindValue(":idUsuario", $idUsuario);
+		$deleteStatus->execute();
+
+		$deleteUsuario = Conexao::getConnMysql()->prepare('DELETE FROM usuarios WHERE id = (:idUsuario)');
+		$deleteUsuario->bindValue(":id", $idUsuario);
+		$deleteUsuario->execute();
+
+	}
+
 	public function inserirUsuario(Usuario $usuario){
 		try{
 			$query = Conexao::getConnMysql()->prepare('SELECT * FROM usuarios WHERE email=(:email) LIMIT 1');
@@ -143,6 +162,7 @@ class UsuarioDAO{
 			$query->execute();
 			$us = $this->processResults($query);
 			if(empty($us)){
+				$senha = md5($usuario->getUsuario_Senha());
 				$sql = 'INSERT INTO usuarios(email, cargo, nome, senha, telefone) 
 				VALUES (:email,:cargo,:nome,:senha,:telefone)';
 			
@@ -150,7 +170,7 @@ class UsuarioDAO{
 				$insert->bindValue(":email", $usuario->getUsuario_Email());
 				$insert->bindValue(":cargo", $usuario->getUsuario_Cargo()); 
 				$insert->bindValue(":nome", $usuario->getUsuario_Nome()); 
-				$insert->bindValue(":senha", $usuario->getUsuario_Senha()); 
+				$insert->bindValue(":senha", $senha); 
 				$insert->bindValue(":telefone", $usuario->getUsuario_Telefone()); 
 	
 				$insert->execute();
