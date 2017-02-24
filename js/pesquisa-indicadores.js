@@ -18,6 +18,47 @@ function pesquisaIndicadores(idProjeto) {
     });
 }
 
+function pesquisaIndicadoresRelatorio(idProjeto) {
+    $.ajax({
+        url: '../service/DetalhesIndicador.php',
+        type: 'GET',
+        data: {
+			id:idProjeto,
+            dataType: 'json',
+        },
+        success: function(xhr, data) {
+            location.href = '../view/DetalhesIndicadoresRelatorio.php';
+            return data;
+        },
+        error: function(req, err) {
+            console.log('Erro ao pesquisar por indicadores' + err);
+        }
+    });
+}
+
+function pesquisaIndicadoresRelatorioTela() {
+    var idProjeto = $('#inputCodigoIndicador').val();
+    var nome = $('#inputNomeIndicador').val();
+    console.log(idProjeto);
+    $.ajax({
+        url: '../service/PesquisaIndicadoresRelatorio.php',
+        type: 'GET',
+        data: {
+			id:idProjeto,
+            nome:nome,
+            dataType: 'json',
+        },
+        success: function(xhr, data) {
+           location.href = '../view/RelatorioIndicadores.php';
+            return data;
+        },
+        error: function(req, err) {
+            console.log('Erro ao pesquisar por indicadores' + err);
+        }
+    });
+    
+}
+
 function associarIndicadores(){
 	location.href = '../view/AssociacaoIndicadores.php';
 }

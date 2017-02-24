@@ -37,7 +37,7 @@ $verifica = $acesso -> acessoUsuario();
                   </div>
                   <div class="col-md-1">
                      <div class="form-group">
-                        <button id="btPesquisaUsuario" class="form-control" onclick="pesquisaUsuario(null,2)" autofocus>Buscar</button>
+                        <button id="btPesquisaUsuario" class="form-control" onclick="pesquisaUsuario(null,null)" autofocus>Buscar</button>
                      </div>
                   </div>
                   <div class="col-md-1">

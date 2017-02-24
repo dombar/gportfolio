@@ -2,6 +2,7 @@
 
 include_once('../dao/conexao.php');
 include_once('../model/IndicadoresNome.php');
+include_once('../model/IndicadoresProjeto.php');
 
 class IndicadoresDAO{
 	
@@ -75,6 +76,14 @@ class IndicadoresDAO{
 			return false;
 		}
 	}
+
+	public function editarIndicador($idIndicador, $nome){
+		 $sql = 'UPDATE indicadores_nome SET indicador=(:nome) WHERE id=(:id)';
+		 $update = Conexao::getConnMysql()->prepare($sql);
+		 $update->bindValue(":nome", $nome);
+		 $update->bindValue(":id", $idIndicador);
+		 return $update->execute();
+	}
 	
 	public function pesquisaTodosIndicadores($idProjeto){
 		try{
@@ -117,6 +126,35 @@ class IndicadoresDAO{
 			print "Erro ao tentar pesquisar um indicador" . $e->getMessage();
 			return false;
 		}
+	}
+
+	public function detalheIndicadoresRelatorio($idProjeto){
+		$sql = 'SELECT iv.valorMax as max, iv.valorMin as min, inn.indicador as nome, inn.id as id, pj.id as idProjeto, pj.nome as nomeProjeto 
+		 FROM indicadores_nome as inn 
+		 JOIN indicadores_vinculados as iv on (inn.id = iv.idIndicador)
+		 JOIN projetos as pj on (pj.id = iv.idProjeto)
+		 WHERE iv.idProjeto = (:idProjeto)';
+		$select = Conexao::getConnMysql()->prepare($sql);
+		$select->bindValue(":idProjeto", $idProjeto);
+		$select->execute();
+		return $this->processIndicadoresRelatorio($select);
+	}
+
+	private function processIndicadoresRelatorio($statement) {
+		$results = array();
+		if($statement) {
+			while($row = $statement->fetch(PDO::FETCH_OBJ)) {
+				$indicadoresNome = new IndicadoresProjeto();
+				$indicadoresNome->setIndicadores_Id($row->id);
+				$indicadoresNome->setIndicadores_Nome($row->nome);
+				$indicadoresNome->setIndicadores_Valormax($row->max);
+				$indicadoresNome->setIndicadores_Valormin($row->min);
+				$indicadoresNome->setIndicadores_Nomeprojeto($row->nomeProjeto);
+				$indicadoresNome->setIndicadores_Idprojeto($row->idProjeto);
+				$results[] = $indicadoresNome;
+			}
+		}
+		return $results;
 	}
 	
 	private function processIndicadoresNome($statement) {

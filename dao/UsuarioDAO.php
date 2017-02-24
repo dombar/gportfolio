@@ -78,7 +78,7 @@ class UsuarioDAO{
             $query = Conexao::getConnMysql()->prepare('SELECT * FROM usuarios WHERE id=(:codigo)');
             $query->bindValue(":codigo", $codigo, PDO::PARAM_INT);
         } else if (!empty($nome)) {
-            $query = Conexao::getConnMysql()->prepare('SELECT * FROM usuarios WHERE nome LIKE nome=(:nome)');
+            $query = Conexao::getConnMysql()->prepare('SELECT * FROM usuarios WHERE nome LIKE (:nome)');
             $query->bindValue(':nome', '%' . $nome . '%');
         } else {
             $query = Conexao::getConnMysql()->prepare('SELECT * FROM usuarios');
@@ -137,6 +137,7 @@ class UsuarioDAO{
 	}
 
 	public function removeUsuario($idUsuario){
+		
 		$deleteMembros = Conexao::getConnMysql()->prepare('DELETE FROM membros WHERE idUsuario = (:idUsuario)');
 		$deleteMembros->bindValue(":idUsuario", $idUsuario);
 		$deleteMembros->execute();
@@ -149,7 +150,7 @@ class UsuarioDAO{
 		$deleteStatus->bindValue(":idUsuario", $idUsuario);
 		$deleteStatus->execute();
 
-		$deleteUsuario = Conexao::getConnMysql()->prepare('DELETE FROM usuarios WHERE id = (:idUsuario)');
+		$deleteUsuario = Conexao::getConnMysql()->prepare('DELETE FROM usuarios WHERE id = (:id)');
 		$deleteUsuario->bindValue(":id", $idUsuario);
 		$deleteUsuario->execute();
 

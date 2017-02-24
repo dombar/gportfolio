@@ -2,10 +2,32 @@
 Class IndicadoresProjeto{
 
     private $indicadores_Id;
-    private $indicadores_IdProjeto;
+    private $indicadores_Nome;
 	private $indicadores_Valormax;
 	private $indicadores_Valormin;
+    private $indicadores_Nomeprojeto;
+    private $indicadores_Idprojeto;
+
+    public function getIndicadores_Nomeprojeto()
+    {
+        return $this->indicadores_Nomeprojeto;
+    }
     
+    public function setIndicadores_Nomeprojeto($indicadores_Nomeprojeto)
+    {
+        return $this->indicadores_Nomeprojeto = $indicadores_Nomeprojeto;
+    }
+
+     public function getIndicadores_Idprojeto()
+    {
+        return $this->indicadores_Idprojeto;
+    }
+    
+    public function setIndicadores_Idprojeto($indicadores_Idprojeto)
+    {
+        return $this->indicadores_Idprojeto = $indicadores_Idprojeto;
+    }
+
     public function getIndicadores_Id()
     {
         return $this->indicadores_Id;
@@ -16,15 +38,15 @@ Class IndicadoresProjeto{
         return $this->indicadores_Id = $indicadores_Id;
     }
     
-    public function getIndicadores_IdProjeto()
+    public function getIndicadores_Nome()
     {
-        return $this->indicadores_IdProjeto;
+        return $this->indicadores_Nome;
     }
     
-    public function setIndicadores_IdProjeto($indicadores_IdProjeto)
+    public function setIndicadores_Nome($indicadores_Nome)
     {
         
-        return $this->indicadores_IdProjeto = $indicadores_IdProjeto;
+        return $this->indicadores_Nome = $indicadores_Nome;
     }
 	
 	 public function getIndicadores_Valormax()

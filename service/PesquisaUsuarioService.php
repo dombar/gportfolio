@@ -1,7 +1,6 @@
 <?php
 session_start();
 include_once('../dao/UsuarioDAO.php');
-
 if(isset($_GET)){
 	if(isset($_GET['codigo'])){
 		$codigo = htmlspecialchars($_GET['codigo']);

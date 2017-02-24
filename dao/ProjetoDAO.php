@@ -93,6 +93,30 @@ class ProjetoDAO
         }
     }
 
+    public function pesquisaProjetoRelatorioIndicadores(){
+        $query = Conexao::getConnMysql()->prepare('select p.* from projetos as p join status as st on(p.status = st.id) where st.nome != "Cancelado" AND st.nome != "Encerrado"');
+        $query->execute();
+        return $this->processResults($query);
+    }
+
+     public function pesquisaProjetoRelatorioIndicadoresBusca($idProjeto, $nomeProjeto){
+        if($idProjeto != null){
+            $query = Conexao::getConnMysql()->prepare('select p.* from projetos as p join status as st on(p.status = st.id) 
+                    where st.nome != "Cancelado" AND st.nome != "Encerrado" AND p.id = (:idProjeto)');
+            $query->bindValue(":idProjeto", $idProjeto);
+        }
+        else if ($nomeProjeto != null){
+            $query = Conexao::getConnMysql()->prepare('select p.* from projetos as p join status as st on(p.status = st.id) 
+                    where st.nome != "Cancelado" AND st.nome != "Encerrado" AND p.nome LIKE (:nome)');
+            $query->bindValue(":nome", '%'. $nomeProjeto . '%');
+        }else{
+            $query = Conexao::getConnMysql()->prepare('select p.* from projetos as p join status as st on(p.status = st.id) 
+                    where st.nome != "Cancelado" AND st.nome != "Encerrado"');
+        }
+        $query->execute();
+        return $this->processResults($query);
+    }
+
      public function updateStatusProjeto(Projetos $projeto)
     {
         try {

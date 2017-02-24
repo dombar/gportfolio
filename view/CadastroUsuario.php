@@ -1,6 +1,10 @@
 <?php
    include('../dao/UsuarioDAO.php');
    include('../view/principal.php');
+
+   $acesso = new AcessoUsuario();
+   $verifica = $acesso -> acessoUsuario();
+
     $statusUsuario = null;
    if(isset($_SESSION['usuarioPost'])){
 	   $statusUsuario = $_SESSION['usuarioPost'];
@@ -19,13 +23,39 @@
 			break;
 		}
    }
-   ?>
+
+if ($verifica -> getEditar_usuario() == null && $verifica -> getCadastrar_usuario() == null) {
+?>
+<script type="text/javascript">
+   $(document).ready(function () {
+   $("#readOnlyFields :input").attr("disabled", true); 
+   });
+</script>
+<?php
+} else if ($verifica -> getEditar_usuario() == null && isset($_SESSION['usuarioEditar'])) {
+?>
+<script type="text/javascript">
+   $(document).ready(function () {
+   $("#readOnlyFields :input").attr("disabled", true); 
+   });
+</script>
+<?php
+} else if ($verifica -> getCadastrar_usuario() == null && !isset($_SESSION['usuarioEditar'])) {
+	?>
+<script type="text/javascript">
+   $(document).ready(function () {
+   $("#readOnlyFields :input").attr("disabled", true); 
+   });
+</script>
+<?php
+}
+?>
 <html lang="pt-br">
    <head>
       <meta charset="UTF-8">
    </head>
    <body>
-      <div class="container">
+      <div class="container" id="readOnlyFields">
          <div class="col-xs-12 col-md-12 col-lg-12 col-sm-12">
 		  <div class="page-header">
             <h3>Cadastro de Usuário</h3>
@@ -113,7 +143,13 @@
 			   <div class="form-group">
                   <label class="col-md-1 control-label">Senha: </label>
                   <div class="col-md-3">
-                     <input type="password" id="inputSenhaUsuario" name="inputSenhaUsuario" value="" class="form-control" size="20" required>
+				  <?php
+				  if(isset($codigo)){
+					  echo '<input type="password" id="inputSenhaUsuario" name="inputSenhaUsuario" value="" class="form-control" size="20">';
+				  }else{
+					  echo '<input type="password" id="inputSenhaUsuario" name="inputSenhaUsuario" value="" class="form-control" size="20" required>';
+				  }
+                     ?>
                   </div>
                </div>
                <div class="form-group">

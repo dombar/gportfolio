@@ -76,7 +76,7 @@ function direcionamentoPagina(idUsuario){
 
 function deletarUsuario(idUsuario) {
     if (confirm("Deseja realmente excluir esse usuário!") == true) {
-		if(idUsuario != null || idUsuario.length > 0){
+		if(idUsuario != null){
             $.ajax({
             url: '../service/DeletaUsuario.php',
             type: 'POST',
@@ -85,6 +85,7 @@ function deletarUsuario(idUsuario) {
                 dataType: 'json'
             },
             success: function(xhr, data) {
+                location.reload();
 				location.href = '../view/PesquisaUsuario.php';
                 return data;
             },

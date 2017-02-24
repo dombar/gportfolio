@@ -4,29 +4,11 @@ include('../view/principal.php');
 include('../dao/ClassificacaoDAO.php');
 include('../dao/StatusDAO.php');
 include('../dao/GerenteResponsavelDAO.php');
-include('../dao/UsuarioDAO.php');
 
-$cadastroProj = false;
-$editProj     = false;
-$userId       = null;
-if (isset($_COOKIE['userId'])) {
-    $userId = $_COOKIE['userId'];
-} else {
-    $userId = $_SESSION['usuarioLogado'];
-}
+$acesso = new AcessoUsuario();
+$verifica = $acesso -> acessoUsuario();
 
-$daoUser   = new UsuarioDAO();
-$permissao = $daoUser->consultaModulosUsuario($userId);
-foreach ($permissao as $m) {
-    if ($m->getPermissao_Nome() == 'Cadastro de projetos') {
-        $cadastroProj = true;
-    }
-    if ($m->getPermissao_Nome() == 'Editar projeto') {
-        $editProj = true;
-    }
-}
-
-if (!$editProj && !$cadastroProj) {
+if ($verifica -> getEditar_projeto() == null && $verifica -> getCadastrar_projeto() == null) {
 ?>
 <script type="text/javascript">
    $(document).ready(function () {
@@ -34,7 +16,7 @@ if (!$editProj && !$cadastroProj) {
    });
 </script>
 <?php
-} else if (!$editProj && isset($_SESSION['projetoEditar'])) {
+} else if ($verifica -> getEditar_projeto() == null && isset($_SESSION['projetoEditar'])) {
 ?>
 <script type="text/javascript">
    $(document).ready(function () {
@@ -42,7 +24,7 @@ if (!$editProj && !$cadastroProj) {
    });
 </script>
 <?php
-} else if (!$cadastroProj && !isset($_SESSION['projetoEditar'])) {
+} else if ($verifica -> getCadastrar_projeto() == null && !isset($_SESSION['projetoEditar'])) {
 ?>
 <script type="text/javascript">
    $(document).ready(function () {
