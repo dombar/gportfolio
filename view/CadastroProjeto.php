@@ -320,18 +320,21 @@ if (isset($_SESSION['projetoEditar'])) {
                   <?php
                      $status= new StatusDAO();
                      $resultsSt  = $status->todosStatus();
-                     echo ' <div class="form-group">
-                                                   <select class="form-control" name="selectStatus" required>';
-                     if (isset($resultsSt)) {
-                     	if(isset($sts)){
+                     echo ' <div class="form-group"> ';
+                     if (isset($resultsSt) && isset($stId)) {
+                         echo' <select class="form-control" name="selectStatus" disabled>';
+                     }else{
+                         echo' <select class="form-control" name="selectStatus">';
+                     }
+                     if(isset($sts)){
                      		echo '<option value="'.$stId.'">'.$sts.'</option>';
-                     	}
-                     	foreach ($resultsSt as $st) {
+                     }
+                     foreach ($resultsSt as $st) {
                      		if($st->getStatus_Id() != $stId){
                      		echo '<option value="'.$st->getStatus_Id().'">'.$st->getStatus_Nome().'</option>';
-                     		}
                      	}
                      }
+                     
                      echo '</select>';
                      ?>
                </div>
