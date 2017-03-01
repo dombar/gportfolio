@@ -72,6 +72,15 @@ class UsuarioDAO{
 		return $this->processResults($query); 
 	}
 
+	public function updateSenhaUsuario($idUsuario, $password){
+		$password = md5($password);
+		$query = Conexao::getConnMysql()->prepare('UPDATE usuarios SET senha=(:password) WHERE id=(:idUsuario)');
+		$query->bindValue(":idUsuario", $idUsuario);
+		$query->bindValue(":password", $password); 
+		$query->execute();
+		return true;
+	}
+
 	public function localizarUsuarioPorCodigoOuNome($codigo, $nome){
 
 		if (!empty($codigo)) {
