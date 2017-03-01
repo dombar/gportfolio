@@ -52,7 +52,7 @@ Class AcessoUsuario{
 			if($m -> getPermissao_Nome() == 'Editar permissao usuario'){
 				$this -> setEditar_permissao_usuario(true);
 			}
-			if($m -> getPermissao_Nome() == 'Cadastro de usuario'){
+			if($m -> getPermissao_Nome() == 'Cadastro de usuário'){
 				$this -> setCadastrar_usuario(true);
 			}
             if($m -> getPermissao_Nome() == 'Relatório indicadores'){

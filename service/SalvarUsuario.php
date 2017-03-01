@@ -2,6 +2,7 @@
 session_start();
 include('../model/Usuario.php');
 include('../dao/UsuarioDAO.php');
+include('../service/EmailUsuario.php');
 
 if(isset($_POST)){
 	$usuario = new Usuario();
@@ -10,9 +11,13 @@ if(isset($_POST)){
 	$usuario->setUsuario_Senha(htmlspecialchars($_POST['inputSenhaUsuario']));
 	$usuario->setUsuario_Cargo(htmlspecialchars($_POST['inputCargoUsuario']));
 	$usuario->setUsuario_Telefone(htmlspecialchars($_POST['inputTelefoneUsuario']));
+	$usuario->setUsuario_Perfil(htmlspecialchars($_POST['selectPerfil']));
 	
 	$dao = new UsuarioDAO();
 	$verify = $dao -> inserirUsuario($usuario);
+
+	$emailUsuario = new EmailUsuario();
+	$emailUsuario -> enviaEmailUsuario($usuario);
 	
 	if($verify && $verify == 1){
 		$_SESSION['usuarioPost'] = 1;

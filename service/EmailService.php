@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 class EmailService
 {
     
@@ -16,11 +14,11 @@ class EmailService
 		$mail->IsHTML(true);
 		
         $mail->CharSet = 'UTF-8';
-        $mail->Host     = 'mx1.hostinger.com.br';
+         $mail->Host     = 'in-v3.mailjet.com';
         $mail->Port     = '587';
-        $mail->Username = 'admin@gportfolio.esy.es';
-        $mail->Password = 'spiacI2w';
-        $mail->From     = 'admin@gportfolio.esy.es';
+        $mail->Username = 'a58e6d3c283c3ee2dff7a1bdb001a58f';
+        $mail->Password = '6ff9402337df1ff5fe270a4a6759a6f7';
+        $mail->From     = 'baroninet@gmail.com';
         $mail->FromName = 'Gerenciador de Portfolio';
         $mail->Subject  =  $assunto;
         $mail->Body     =  $mensagem;
