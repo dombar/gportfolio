@@ -1,6 +1,5 @@
 <?php
    include('../view/principal.php');
-   include('../dao/UsuarioDAO.php');
    
   $usEditar = null;
    if(isset($_SESSION['usuarioEditar'])){
