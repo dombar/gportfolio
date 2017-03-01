@@ -42,11 +42,16 @@ if (!empty($listaProjetos)) {
            echo '           <td> Sem indicador </td>'; 
         }
         echo '            <td class="text-right"> ' ;
-		
-		echo ' <button type="button" onClick="pesquisaIndicadoresRelatorio('.$m -> getProjeto_Id().')" class="btn btn-success btn-responsive" aria-label="Left Align">
+
+        if($nomeIndicadores == null){
+            echo ' <button type="button" onClick="pesquisaIndicadoresRelatorio('.$m -> getProjeto_Id().')" class="btn btn-success btn-responsive" aria-label="Left Align">
+									<span class="glyphicon glyphicon-edit" aria-hidden="true" disabled></span> Visualizar
+								</button>';
+        }else{
+            echo ' <button type="button" onClick="pesquisaIndicadoresRelatorio('.$m -> getProjeto_Id().')" class="btn btn-success btn-responsive" aria-label="Left Align">
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Visualizar
 								</button>';
-		
+        }
 	
 		echo '</td>';	
 								

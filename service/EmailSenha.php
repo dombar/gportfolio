@@ -17,8 +17,8 @@ if (isset($_POST['inputEmail'])) {
             $senhaEnvio = geraSenha(8);
             $nomeDestinatario  = $results->getUsuario_Nome();
 			$destinatario 	   = $results->getUsuario_Email();
-			$assunto	       = 'Recupera��o de senha.';
-            $mensagem	       = 'Sua senha �: '. $senhaEnvio;
+			$assunto	       = 'Recuperação de senha.';
+            $mensagem	       = 'Sua senha é: '. $senhaEnvio;
 			$redirectPage      = '../index.php';
 			$enviaEmail        = new EmailService();
 			$enviaEmail        -> mail($destinatario, $assunto, $mensagem, $redirectPage, $nomeDestinatario);
