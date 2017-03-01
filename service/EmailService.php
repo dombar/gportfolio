@@ -14,10 +14,10 @@ class EmailService
 		$mail->IsHTML(true);
 		
         $mail->CharSet = 'UTF-8';
-         $mail->Host     = 'in-v3.mailjet.com';
+         $mail->Host     = '';
         $mail->Port     = '587';
-        $mail->Username = 'a58e6d3c283c3ee2dff7a1bdb001a58f';
-        $mail->Password = '6ff9402337df1ff5fe270a4a6759a6f7';
+        $mail->Username = '';
+        $mail->Password = '';
         $mail->From     = 'baroninet@gmail.com';
         $mail->FromName = 'Gerenciador de Portfolio';
         $mail->Subject  =  $assunto;
