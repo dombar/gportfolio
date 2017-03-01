@@ -6,6 +6,8 @@ if(!isset($_COOKIE['userId'])) {
 	}
 }
 include('../model/AcessoUsuario.php');
+$acesso = new AcessoUsuario();
+$verifica = $acesso -> acessoUsuario();
 
 ?>
 
@@ -55,7 +57,13 @@ include('../model/AcessoUsuario.php');
 				  <li><a href="../view/ListaIndex.php"><span class="glyphicon glyphicon-home"></span> Início</a></li>
                   <li><a href="../view/PesquisaProjeto.php"><span class="glyphicon glyphicon-paperclip"></span> Projetos</a></li>
                   <li><a href="../view/PesquisaUsuario.php"><span class="glyphicon glyphicon-tower"></span> Cadastro de Usuários</a></li>
-                  <li><a href="../view/RelatorioIndicadores.php"><span class="glyphicon glyphicon-list-alt"></span> Relatório de Indicadores</a></li> 
+                  <?php
+                    if($verifica -> getRelatorio_indicadores()){
+                        echo '<li><a href="../view/RelatorioIndicadores.php"><span class="glyphicon glyphicon-list-alt"></span> Relatório de Indicadores</a></li>';
+                    }else{
+                        echo '<li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Relatório de Indicadores</a></li>';
+                    }
+                  ?>
                </ul>
                <ul class="nav navbar-nav navbar-right">
                   <li><a href="../service/Sair.php"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>

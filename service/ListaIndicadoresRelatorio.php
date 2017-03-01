@@ -38,27 +38,19 @@ if (!empty($listaProjetos)) {
         }
         if(!empty($nomeIndicadores)){
             echo '           <td>' . rtrim($nomeIndicadores,", "). '</td>';
-        }else{
-           echo '           <td> Sem indicador </td>'; 
-        }
-        echo '            <td class="text-right"> ' ;
-
-        if($nomeIndicadores == null){
-            echo ' <button type="button" onClick="pesquisaIndicadoresRelatorio('.$m -> getProjeto_Id().')" class="btn btn-success btn-responsive" aria-label="Left Align">
-									<span class="glyphicon glyphicon-edit" aria-hidden="true" disabled></span> Visualizar
+            echo '            <td class="text-right"> ' ;
+             echo ' <button type="button" onClick="pesquisaIndicadoresRelatorio('.$m -> getProjeto_Id().')" class="btn btn-success btn-responsive" aria-label="Left Align">
+									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Visualizar
 								</button>';
         }else{
-            echo ' <button type="button" onClick="pesquisaIndicadoresRelatorio('.$m -> getProjeto_Id().')" class="btn btn-success btn-responsive" aria-label="Left Align">
+           echo '           <td> Sem indicador </td>'; 
+           echo '            <td class="text-right"> ' ;
+                echo ' <button type="button" onClick="pesquisaIndicadoresRelatorio('.$m -> getProjeto_Id().')" class="btn btn-success btn-responsive" aria-label="Left Align" disabled>
 									<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Visualizar
 								</button>';
         }
 	
-		echo '</td>';	
-								
-								
-							
-								
-								
+		echo '</td>';							
         echo '         </tr>';
         echo '      </tbody>';
     }

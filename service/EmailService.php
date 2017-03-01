@@ -15,7 +15,7 @@ class EmailService
         $mail->SMTPAuth = true;
 		$mail->IsHTML(true);
 		
-        $mail->Charset  = 'utf8_decode';
+        $mail->CharSet = 'UTF-8';
         $mail->Host     = 'mx1.hostinger.com.br';
         $mail->Port     = '587';
         $mail->Username = 'admin@gportfolio.esy.es';

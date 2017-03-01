@@ -12,6 +12,7 @@ Class AcessoUsuario{
 	private $editar_status_projeto;
 	private $editar_membros_projeto;
 	private $editar_indicadores_projeto;
+    private $relatorio_indicadores;
 	
 	public function acessoUsuario(){
 		include_once('../dao/UsuarioDAO.php');
@@ -54,6 +55,9 @@ Class AcessoUsuario{
 			if($m -> getPermissao_Nome() == 'Cadastro de usuario'){
 				$this -> setCadastrar_usuario(true);
 			}
+            if($m -> getPermissao_Nome() == 'Relatório indicadores'){
+				$this -> setRelatorio_indicadores(true);
+			}
 		}
 		
 		return $this;
@@ -69,7 +73,17 @@ Class AcessoUsuario{
     {
         return $this->editar_usuario = $editar_usuario;
     }
-	
+
+    public function getRelatorio_indicadores()
+    {
+        return $this->relatorio_indicadores;
+    }
+    
+    public function setRelatorio_indicadores($relatorio_indicadores)
+    {
+        return $this->relatorio_indicadores = $relatorio_indicadores;
+    }
+
 	public function getExcluir_usuario()
     {
         return $this->excluir_usuario;
