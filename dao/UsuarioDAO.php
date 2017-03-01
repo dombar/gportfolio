@@ -173,7 +173,7 @@ class UsuarioDAO{
 				cargo=(:cargo),
 				email=(:email),
 				telefone=(:telefone),
-				perfil=(:perfil),
+				perfil=(:perfil)
 				WHERE id=(:id)';
 				$insert = Conexao::getConnMysql()->prepare($sql);
 				$insert->bindValue(":id", $usuario->getUsuario_Id());
