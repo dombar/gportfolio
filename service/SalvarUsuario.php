@@ -8,7 +8,14 @@ if(isset($_POST)){
 	$usuario = new Usuario();
 	$usuario->setUsuario_Nome(htmlspecialchars($_POST['inputNomeUsuario']));
 	$usuario->setUsuario_Email(htmlspecialchars($_POST['inputEmailUsuario']));
-	$usuario->setUsuario_Senha(htmlspecialchars($_POST['inputSenhaUsuario']));
+	if(!empty($_POST['inputIdUsuario'])){
+		$usuario->setUsuario_Id($_POST['inputIdUsuario']);
+		if(isset($_POST['inputSenhaUsuario'])){
+			$usuario->setUsuario_Senha(htmlspecialchars($_POST['inputSenhaUsuario']));
+		}
+	}else{
+		$usuario->setUsuario_Senha(htmlspecialchars($_POST['inputSenhaUsuario']));
+	}
 	$usuario->setUsuario_Cargo(htmlspecialchars($_POST['inputCargoUsuario']));
 	$usuario->setUsuario_Telefone(htmlspecialchars($_POST['inputTelefoneUsuario']));
 	$usuario->setUsuario_Perfil(htmlspecialchars($_POST['selectPerfil']));
@@ -16,8 +23,10 @@ if(isset($_POST)){
 	$dao = new UsuarioDAO();
 	$verify = $dao -> inserirUsuario($usuario);
 
-	$emailUsuario = new EmailUsuario();
-	$emailUsuario -> enviaEmailUsuario($usuario);
+	if(empty($_POST['inputIdUsuario'])){
+		$emailUsuario = new EmailUsuario();
+		$emailUsuario -> enviaEmailUsuario($usuario);
+	}
 	
 	if($verify && $verify == 1){
 		$_SESSION['usuarioPost'] = 1;

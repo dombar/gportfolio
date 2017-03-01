@@ -167,19 +167,38 @@ class UsuarioDAO{
 
 	public function inserirUsuario(Usuario $usuario){
 		try{
+			if(!empty($usuario ->getUsuario_Id())){
+				$sql = 'UPDATE usuarios 
+				SET nome=(:nome),
+				cargo=(:cargo),
+				email=(:email),
+				telefone=(:telefone),
+				perfil=(:perfil),
+				WHERE id=(:id)';
+				$insert = Conexao::getConnMysql()->prepare($sql);
+				$insert->bindValue(":id", $usuario->getUsuario_Id());
+				$insert->bindValue(":email", $usuario->getUsuario_Email());
+				$insert->bindValue(":cargo", $usuario->getUsuario_Cargo()); 
+				$insert->bindValue(":nome", $usuario->getUsuario_Nome()); 
+				$insert->bindValue(":perfil", $usuario->getUsuario_Perfil()); 
+				$insert->bindValue(":telefone", $usuario->getUsuario_Telefone()); 
+				$insert->execute();
+				return 1;
+			}else{
 			$query = Conexao::getConnMysql()->prepare('SELECT * FROM usuarios WHERE email=(:email) LIMIT 1');
 			$query->bindValue(":email", $usuario->getUsuario_Email());
 			$query->execute();
 			$us = $this->processResults($query);
 			if(empty($us)){
 				$senha = md5($usuario->getUsuario_Senha());
-				$sql = 'INSERT INTO usuarios(email, cargo, nome, senha, telefone) 
-				VALUES (:email,:cargo,:nome,:senha,:telefone)';
+				$sql = 'INSERT INTO usuarios(email, cargo, nome, senha, telefone, perfil) 
+				VALUES (:email,:cargo,:nome,:senha,:telefone,:perfil)';
 			
 				$insert = Conexao::getConnMysql()->prepare($sql);
 				$insert->bindValue(":email", $usuario->getUsuario_Email());
 				$insert->bindValue(":cargo", $usuario->getUsuario_Cargo()); 
 				$insert->bindValue(":nome", $usuario->getUsuario_Nome()); 
+				$insert->bindValue(":perfil", $usuario->getUsuario_Perfil()); 
 				$insert->bindValue(":senha", $senha); 
 				$insert->bindValue(":telefone", $usuario->getUsuario_Telefone()); 
 	
@@ -187,6 +206,7 @@ class UsuarioDAO{
 				return 1;
 			}else{
 				return 3;
+			}
 			}
 		}catch(Exception $e){
 			print "Erro ao tentar inserir um novo usuário" . $e->getMessage();

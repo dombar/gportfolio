@@ -8,7 +8,7 @@ public function enviaEmailUsuario($usuario){
             $nomeDestinatario  = $usuario->getUsuario_Nome();
 			$destinatario 	   = $usuario->getUsuario_Email();
 			$assunto	       = 'Usuário criado.';
-            $mensagem	       = 'Login: '. $usuario->getUsuario_Email().' <br> Senha: '. $usuario->getUsuario_Senha();
+            $mensagem	       = 'Login: '. $usuario->getUsuario_Email().' <br> Senha: '. $usuario->getUsuario_Senha(). ' <br> Acesso: www.gerenciadorportfolio.esy.es';
 			$redirectPage      = '../index.php';
 			$enviaEmail        = new EmailService();
 			$enviaEmail        -> mail($destinatario, $assunto, $mensagem, $redirectPage, $nomeDestinatario);
