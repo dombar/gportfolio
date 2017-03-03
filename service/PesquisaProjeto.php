@@ -13,6 +13,8 @@ if(isset($_GET)){
 		foreach($results as $v) {
 			$result['codigo'] =  $v -> getProjeto_Id();
 			$result['nome'] =  $v-> getProjeto_Nome();
+			$result['dataR'] =  $v->  getProjeto_data_termino_real();
+			$result['IdST'] =  $v->  getProjeto_Status();
 			array_push($res, $result);
 		}
 		if(!empty($res)){
