@@ -8,6 +8,31 @@ include('../dao/GerenteResponsavelDAO.php');
 $acesso = new AcessoUsuario();
 $verifica = $acesso -> acessoUsuario();
 
+$updateProjeto = null;
+if (isset($_SESSION['salvaProjeto'])) {
+    $updateProjeto = $_SESSION['salvaProjeto'];
+}
+
+if (isset($_SESSION['projetoEditar'])) {
+    $listResult = $_SESSION['projetoEditar'];
+    foreach ($listResult as $key => $value) {
+        $codigo      = $value['codigo'];
+        $nomeProjeto = $value['nome'];
+        $orcamento   = $value['orc_total'];
+        $desc        = $value['desc'];
+        $class       = $value['classificacao'];
+        $classId     = $value['IdCL'];
+        $gp          = $value['gtResponsavel'];
+        $gpId        = $value['IdGP'];
+        $sts         = $value['status'];
+        $stId        = $value['IdST'];
+        $dtInc       = $value['dtInicio'];
+        $dtTer       = $value['dtTermino'];
+        $dtTerR      = $value['dtTerminoReal'];
+        break;
+    }
+}
+
 if ($verifica -> getEditar_projeto() == null && $verifica -> getCadastrar_projeto() == null) {
 ?>
 <script type="text/javascript">
@@ -32,31 +57,19 @@ if ($verifica -> getEditar_projeto() == null && $verifica -> getCadastrar_projet
    });
 </script>
 <?php
-}
-
-
-$updateProjeto = null;
-if (isset($_SESSION['salvaProjeto'])) {
-    $updateProjeto = $_SESSION['salvaProjeto'];
-}
-
-if (isset($_SESSION['projetoEditar'])) {
-    $listResult = $_SESSION['projetoEditar'];
-    foreach ($listResult as $key => $value) {
-        $codigo      = $value['codigo'];
-        $nomeProjeto = $value['nome'];
-        $orcamento   = $value['orc_total'];
-        $desc        = $value['desc'];
-        $class       = $value['classificacao'];
-        $classId     = $value['IdCL'];
-        $gp          = $value['gtResponsavel'];
-        $gpId        = $value['IdGP'];
-        $sts         = $value['status'];
-        $stId        = $value['IdST'];
-        $dtInc       = $value['dtInicio'];
-        $dtTer       = $value['dtTermino'];
-        $dtTerR      = $value['dtTerminoReal'];
-        break;
+}else if(isset($_SESSION['projetoEditar'])){
+    if(isset($stId)){
+        $daoStatus = new StatusDAO();
+	    $status = $daoStatus -> getStatusPorId($stId);
+        if($status -> getStatus_Nome() == 'Cancelado' || $status -> getStatus_Nome() == 'Encerrado'){
+            ?>
+<script type="text/javascript">
+   $(document).ready(function () {
+   $("#readOnlyFields :input").attr("disabled", true); 
+   });
+</script>
+<?php
+        }
     }
 }
 
